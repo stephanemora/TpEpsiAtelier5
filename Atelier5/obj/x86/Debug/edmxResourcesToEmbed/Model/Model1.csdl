@@ -1,0 +1,256 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="EntrepriseModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+  <EntityContainer Name="EntrepriseEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Categories" EntityType="EntrepriseModel.Categories" />
+    <EntitySet Name="Customers" EntityType="EntrepriseModel.Customers" />
+    <EntitySet Name="Employees" EntityType="EntrepriseModel.Employees" />
+    <EntitySet Name="Order_Details" EntityType="EntrepriseModel.Order_Details" />
+    <EntitySet Name="Orders" EntityType="EntrepriseModel.Orders" />
+    <EntitySet Name="Products" EntityType="EntrepriseModel.Products" />
+    <EntitySet Name="Shippers" EntityType="EntrepriseModel.Shippers" />
+    <EntitySet Name="Suppliers" EntityType="EntrepriseModel.Suppliers" />
+    <AssociationSet Name="Products_FK01" Association="EntrepriseModel.Products_FK01">
+      <End Role="Categories" EntitySet="Categories" />
+      <End Role="Products" EntitySet="Products" />
+    </AssociationSet>
+    <AssociationSet Name="Orders_FK00" Association="EntrepriseModel.Orders_FK00">
+      <End Role="Customers" EntitySet="Customers" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="Orders_FK02" Association="EntrepriseModel.Orders_FK02">
+      <End Role="Employees" EntitySet="Employees" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="Order_Details_FK00" Association="EntrepriseModel.Order_Details_FK00">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="Order_Details" EntitySet="Order_Details" />
+    </AssociationSet>
+    <AssociationSet Name="Order_Details_FK01" Association="EntrepriseModel.Order_Details_FK01">
+      <End Role="Orders" EntitySet="Orders" />
+      <End Role="Order_Details" EntitySet="Order_Details" />
+    </AssociationSet>
+    <AssociationSet Name="Orders_FK01" Association="EntrepriseModel.Orders_FK01">
+      <End Role="Shippers" EntitySet="Shippers" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="Products_FK00" Association="EntrepriseModel.Products_FK00">
+      <End Role="Suppliers" EntitySet="Suppliers" />
+      <End Role="Products" EntitySet="Products" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Categories">
+    <Key>
+      <PropertyRef Name="Category_ID" />
+    </Key>
+    <Property Name="Category_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Category_Name" Type="String" Nullable="false" MaxLength="15" Unicode="true" FixedLength="false" />
+    <Property Name="Description" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="Picture" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <NavigationProperty Name="Products" Relationship="EntrepriseModel.Products_FK01" FromRole="Categories" ToRole="Products" />
+  </EntityType>
+  <EntityType Name="Customers">
+    <Key>
+      <PropertyRef Name="Customer_ID" />
+    </Key>
+    <Property Name="Customer_ID" Type="String" Nullable="false" MaxLength="5" Unicode="true" FixedLength="false" />
+    <Property Name="Company_Name" Type="String" Nullable="false" MaxLength="40" Unicode="true" FixedLength="false" />
+    <Property Name="Contact_Name" Type="String" MaxLength="30" Unicode="true" FixedLength="false" />
+    <Property Name="Contact_Title" Type="String" MaxLength="30" Unicode="true" FixedLength="false" />
+    <Property Name="Address" Type="String" MaxLength="60" Unicode="true" FixedLength="false" />
+    <Property Name="City" Type="String" MaxLength="15" Unicode="true" FixedLength="false" />
+    <Property Name="Region" Type="String" MaxLength="15" Unicode="true" FixedLength="false" />
+    <Property Name="Postal_Code" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+    <Property Name="Country" Type="String" MaxLength="15" Unicode="true" FixedLength="false" />
+    <Property Name="Phone" Type="String" MaxLength="24" Unicode="true" FixedLength="false" />
+    <Property Name="Fax" Type="String" MaxLength="24" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="Orders" Relationship="EntrepriseModel.Orders_FK00" FromRole="Customers" ToRole="Orders" />
+  </EntityType>
+  <EntityType Name="Employees">
+    <Key>
+      <PropertyRef Name="Employee_ID" />
+    </Key>
+    <Property Name="Employee_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Last_Name" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false" />
+    <Property Name="First_Name" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="false" />
+    <Property Name="Title" Type="String" MaxLength="30" Unicode="true" FixedLength="false" />
+    <Property Name="Birth_Date" Type="DateTime" />
+    <Property Name="Hire_Date" Type="DateTime" />
+    <Property Name="Address" Type="String" MaxLength="60" Unicode="true" FixedLength="false" />
+    <Property Name="City" Type="String" MaxLength="15" Unicode="true" FixedLength="false" />
+    <Property Name="Region" Type="String" MaxLength="15" Unicode="true" FixedLength="false" />
+    <Property Name="Postal_Code" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+    <Property Name="Country" Type="String" MaxLength="15" Unicode="true" FixedLength="false" />
+    <Property Name="Home_Phone" Type="String" MaxLength="24" Unicode="true" FixedLength="false" />
+    <Property Name="Extension" Type="String" MaxLength="4" Unicode="true" FixedLength="false" />
+    <Property Name="Photo" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="Notes" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="Reports_To" Type="Int32" />
+    <NavigationProperty Name="Orders" Relationship="EntrepriseModel.Orders_FK02" FromRole="Employees" ToRole="Orders" />
+  </EntityType>
+  <EntityType Name="Order_Details">
+    <Key>
+      <PropertyRef Name="Order_ID" />
+      <PropertyRef Name="Product_ID" />
+    </Key>
+    <Property Name="Order_ID" Type="Int32" Nullable="false" />
+    <Property Name="Product_ID" Type="Int32" Nullable="false" />
+    <Property Name="Unit_Price" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+    <Property Name="Quantity" Type="Int16" Nullable="false" />
+    <Property Name="Discount" Type="Single" Nullable="false" />
+    <NavigationProperty Name="Products" Relationship="EntrepriseModel.Order_Details_FK00" FromRole="Order_Details" ToRole="Products" />
+    <NavigationProperty Name="Orders" Relationship="EntrepriseModel.Order_Details_FK01" FromRole="Order_Details" ToRole="Orders" />
+  </EntityType>
+  <EntityType Name="Orders">
+    <Key>
+      <PropertyRef Name="Order_ID" />
+    </Key>
+    <Property Name="Order_ID" Type="Int32" Nullable="false" />
+    <Property Name="Customer_ID" Type="String" Nullable="false" MaxLength="5" Unicode="true" FixedLength="false" />
+    <Property Name="Employee_ID" Type="Int32" />
+    <Property Name="Ship_Name" Type="String" MaxLength="40" Unicode="true" FixedLength="false" />
+    <Property Name="Ship_Address" Type="String" MaxLength="60" Unicode="true" FixedLength="false" />
+    <Property Name="Ship_City" Type="String" MaxLength="15" Unicode="true" FixedLength="false" />
+    <Property Name="Ship_Region" Type="String" MaxLength="15" Unicode="true" FixedLength="false" />
+    <Property Name="Ship_Postal_Code" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+    <Property Name="Ship_Country" Type="String" MaxLength="15" Unicode="true" FixedLength="false" />
+    <Property Name="Ship_Via" Type="Int32" />
+    <Property Name="Order_Date" Type="DateTime" />
+    <Property Name="Required_Date" Type="DateTime" />
+    <Property Name="Shipped_Date" Type="DateTime" />
+    <Property Name="Freight" Type="Decimal" Precision="19" Scale="4" />
+    <NavigationProperty Name="Customers" Relationship="EntrepriseModel.Orders_FK00" FromRole="Orders" ToRole="Customers" />
+    <NavigationProperty Name="Employees" Relationship="EntrepriseModel.Orders_FK02" FromRole="Orders" ToRole="Employees" />
+    <NavigationProperty Name="Order_Details" Relationship="EntrepriseModel.Order_Details_FK01" FromRole="Orders" ToRole="Order_Details" />
+    <NavigationProperty Name="Shippers" Relationship="EntrepriseModel.Orders_FK01" FromRole="Orders" ToRole="Shippers" />
+  </EntityType>
+  <EntityType Name="Products">
+    <Key>
+      <PropertyRef Name="Product_ID" />
+    </Key>
+    <Property Name="Product_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Supplier_ID" Type="Int32" />
+    <Property Name="Category_ID" Type="Int32" />
+    <Property Name="Product_Name" Type="String" Nullable="false" MaxLength="40" Unicode="true" FixedLength="false" />
+    <Property Name="English_Name" Type="String" MaxLength="40" Unicode="true" FixedLength="false" />
+    <Property Name="Quantity_Per_Unit" Type="String" MaxLength="20" Unicode="true" FixedLength="false" />
+    <Property Name="Unit_Price" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Units_In_Stock" Type="Int16" />
+    <Property Name="Units_On_Order" Type="Int16" />
+    <Property Name="Reorder_Level" Type="Int16" />
+    <Property Name="Discontinued" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Categories" Relationship="EntrepriseModel.Products_FK01" FromRole="Products" ToRole="Categories" />
+    <NavigationProperty Name="Order_Details" Relationship="EntrepriseModel.Order_Details_FK00" FromRole="Products" ToRole="Order_Details" />
+    <NavigationProperty Name="Suppliers" Relationship="EntrepriseModel.Products_FK00" FromRole="Products" ToRole="Suppliers" />
+  </EntityType>
+  <EntityType Name="Shippers">
+    <Key>
+      <PropertyRef Name="Shipper_ID" />
+    </Key>
+    <Property Name="Shipper_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Company_Name" Type="String" Nullable="false" MaxLength="40" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="Orders" Relationship="EntrepriseModel.Orders_FK01" FromRole="Shippers" ToRole="Orders" />
+  </EntityType>
+  <EntityType Name="Suppliers">
+    <Key>
+      <PropertyRef Name="Supplier_ID" />
+    </Key>
+    <Property Name="Supplier_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Company_Name" Type="String" Nullable="false" MaxLength="40" Unicode="true" FixedLength="false" />
+    <Property Name="Contact_Name" Type="String" MaxLength="30" Unicode="true" FixedLength="false" />
+    <Property Name="Contact_Title" Type="String" MaxLength="30" Unicode="true" FixedLength="false" />
+    <Property Name="Address" Type="String" MaxLength="60" Unicode="true" FixedLength="false" />
+    <Property Name="City" Type="String" MaxLength="15" Unicode="true" FixedLength="false" />
+    <Property Name="Region" Type="String" MaxLength="15" Unicode="true" FixedLength="false" />
+    <Property Name="Postal_Code" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+    <Property Name="Country" Type="String" MaxLength="15" Unicode="true" FixedLength="false" />
+    <Property Name="Phone" Type="String" MaxLength="24" Unicode="true" FixedLength="false" />
+    <Property Name="Fax" Type="String" MaxLength="24" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="Products" Relationship="EntrepriseModel.Products_FK00" FromRole="Suppliers" ToRole="Products" />
+  </EntityType>
+  <Association Name="Products_FK01">
+    <End Role="Categories" Type="EntrepriseModel.Categories" Multiplicity="0..1" />
+    <End Role="Products" Type="EntrepriseModel.Products" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categories">
+        <PropertyRef Name="Category_ID" />
+      </Principal>
+      <Dependent Role="Products">
+        <PropertyRef Name="Category_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Orders_FK00">
+    <End Role="Customers" Type="EntrepriseModel.Customers" Multiplicity="1" />
+    <End Role="Orders" Type="EntrepriseModel.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customers">
+        <PropertyRef Name="Customer_ID" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="Customer_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Orders_FK02">
+    <End Role="Employees" Type="EntrepriseModel.Employees" Multiplicity="0..1" />
+    <End Role="Orders" Type="EntrepriseModel.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employees">
+        <PropertyRef Name="Employee_ID" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="Employee_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Order_Details_FK00">
+    <End Role="Products" Type="EntrepriseModel.Products" Multiplicity="1" />
+    <End Role="Order_Details" Type="EntrepriseModel.Order_Details" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="Product_ID" />
+      </Principal>
+      <Dependent Role="Order_Details">
+        <PropertyRef Name="Product_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Order_Details_FK01">
+    <End Role="Orders" Type="EntrepriseModel.Orders" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Order_Details" Type="EntrepriseModel.Order_Details" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Orders">
+        <PropertyRef Name="Order_ID" />
+      </Principal>
+      <Dependent Role="Order_Details">
+        <PropertyRef Name="Order_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Orders_FK01">
+    <End Role="Shippers" Type="EntrepriseModel.Shippers" Multiplicity="0..1" />
+    <End Role="Orders" Type="EntrepriseModel.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Shippers">
+        <PropertyRef Name="Shipper_ID" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="Ship_Via" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Products_FK00">
+    <End Role="Suppliers" Type="EntrepriseModel.Suppliers" Multiplicity="0..1" />
+    <End Role="Products" Type="EntrepriseModel.Products" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Suppliers">
+        <PropertyRef Name="Supplier_ID" />
+      </Principal>
+      <Dependent Role="Products">
+        <PropertyRef Name="Supplier_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
